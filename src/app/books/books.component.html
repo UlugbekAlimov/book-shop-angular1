@@ -1,0 +1,43 @@
+<div class="container mx-auto p-4">
+  <h2 class="text-2xl font-bold mb-4">Все книги</h2>
+  <div class="mb-4">
+    <app-custom-button type="info" (click)="openModal()"
+      >Добавить книгу</app-custom-button
+    >
+  </div>
+  <label class="block mb-2">Фильтр книг по категориям:</label>
+  <div class="mb-4 flex gap-4">
+    <select class="border p-2 rounded w-full">
+      <option selected>Все категории</option>
+      <option value="1">Категория 1</option>
+      <option value="2">Категория 2</option>
+    </select>
+    <app-custom-button type="info">Фильтр</app-custom-button>
+  </div>
+  <ul class="grid grid-cols-3 gap-4">
+    <li
+      class="border p-4 flex flex-col items-center"
+      *ngFor="let book of [1, 2, 3]"
+    >
+      <img
+        src="../../assets/image/9780802163011.webp"
+        alt="Book Image"
+        class="w-[120px] h-36 mb-4"
+      />
+      <div class="mb-2">
+        <p>Книга {{ book }}</p>
+        <p>Цена {{ book }}</p>
+        <p>Описание {{ book }}</p>
+        <p>Категория {{ book }}</p>
+      </div>
+      <div class="flex gap-2">
+        <app-custom-button type="success">Изменить</app-custom-button>
+        <app-custom-button type="danger">Удалить</app-custom-button>
+      </div>
+    </li>
+  </ul>
+  <app-custom-modal
+    *ngIf="showModal"
+    (closeModal)="closeModal()"
+  ></app-custom-modal>
+</div>

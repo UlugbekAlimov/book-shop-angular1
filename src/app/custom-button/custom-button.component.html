@@ -1,0 +1,10 @@
+<button
+  [ngClass]="{
+    'bg-blue-500  text-white': type === 'info',
+    'bg-red-500 text-white': type === 'danger',
+    'bg-green-500  text-white': type === 'success'
+  }"
+  class="px-4 py-2 text-white rounded-md w-full"
+>
+  <ng-content></ng-content>
+</button>
