@@ -1,7 +1,7 @@
+// book.interface.ts
 export interface Book {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
+  id?: string;
   categoryId: string;
+  name: string;
+  price: number;
 }

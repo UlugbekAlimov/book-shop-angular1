@@ -17,7 +17,7 @@
   <ul class="grid grid-cols-3 gap-4">
     <li
       class="border p-4 flex flex-col items-center"
-      *ngFor="let book of [1, 2, 3]"
+      *ngFor="let book of books"
     >
       <img
         src="../../assets/image/9780802163011.webp"
@@ -25,10 +25,9 @@
         class="w-[120px] h-36 mb-4"
       />
       <div class="mb-2">
-        <p>Книга {{ book }}</p>
-        <p>Цена {{ book }}</p>
-        <p>Описание {{ book }}</p>
-        <p>Категория {{ book }}</p>
+        <p>{{ book.name }}</p>
+        <p>Цена: {{ book.price | currency }}</p>
+        <p>Категория: {{ book.categoryId }}</p>
       </div>
       <div class="flex gap-2">
         <app-custom-button type="success">Изменить</app-custom-button>
