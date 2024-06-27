@@ -1,4 +1,3 @@
-// book.interface.ts
 export interface Book {
   id?: string;
   categoryId: string;

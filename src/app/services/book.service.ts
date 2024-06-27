@@ -1,4 +1,3 @@
-// src/app/books/book.service.ts
 import { Injectable } from '@angular/core';
 import { Firestore, collectionData, collection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
