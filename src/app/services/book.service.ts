@@ -9,7 +9,7 @@ export class BookService {
   private booksCollection;
 
   constructor(private firestore: Firestore) {
-    this.booksCollection = collection(firestore, 'books');
+    this.booksCollection = collection(this.firestore, 'books');
   }
 
   getAllBooks(): Observable<Book[]> {

@@ -25,9 +25,10 @@
         class="w-[120px] h-36 mb-4"
       />
       <div class="mb-2">
-        <p>{{ book.name }}</p>
+        <p>Название: {{ book.name }}</p>
+        <p>Описание: {{ book.description }}</p>
         <p>Цена: {{ book.price | currency }}</p>
-        <p>Категория: {{ book.categoryId }}</p>
+        <p>Категория: </p>
       </div>
       <div class="flex gap-2">
         <app-custom-button type="success">Изменить</app-custom-button>
@@ -38,5 +39,7 @@
   <app-custom-modal
     *ngIf="showModal"
     (closeModal)="closeModal()"
-  ></app-custom-modal>
+  >
+  <input class="border p-2 rounded w-full" type="text">
+  </app-custom-modal>
 </div>

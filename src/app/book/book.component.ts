@@ -9,10 +9,10 @@ import { Book } from '../models/book.model';
   selector: 'app-books',
   standalone: true,
   imports: [CommonModule, CustomButtonComponent, CustomModalComponent],
-  templateUrl: './books.component.html',
-  styleUrls: ['./books.component.scss']
+  templateUrl: './book.component.html',
+  styleUrls: ['./book.component.scss']
 })
-export class BooksComponent implements OnInit {
+export class BookComponent implements OnInit {
   public showModal: boolean = false;
   public books: Book[] = [];
 
