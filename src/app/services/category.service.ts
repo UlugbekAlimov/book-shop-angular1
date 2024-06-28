@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection , addDoc, getDocs , doc , updateDoc } from '@angular/fire/firestore';
+import { Firestore, collection , addDoc, getDocs , doc , updateDoc , deleteDoc } from '@angular/fire/firestore';
 import { from, Observable } from 'rxjs';
 
 @Injectable({
@@ -25,6 +25,11 @@ export class CategoryService {
   updateCategory(categoryId: string, newName: string): Promise<void> {
     const categoryDoc = doc(this.firestore, 'categories', categoryId);
     return updateDoc(categoryDoc, { name: newName });
+  }
+
+  deleteCategory(categoryId: string): Promise<void> {
+    const categoryDoc = doc(this.firestore, 'categories', categoryId);
+    return deleteDoc(categoryDoc);
   }
 
 }

@@ -1,15 +1,16 @@
 <div class="container mx-auto p-4">
   <h2 class="text-2xl font-bold mb-4">Категории</h2>
-  <div class="mb-4">
-    <input [(ngModel)]="newCategoryName" type="text" placeholder="Введите название новой категории" class="border p-2 mb-5 rounded w-full">
-    <app-custom-button type="info" (click)="addCategory()">Добавить</app-custom-button >
-  </div>
+  
+  <app-add-category></app-add-category>
+  
   <ul>
     <li *ngFor="let category of categories" class="border-b p-2 flex justify-between items-center">
       <span>{{ category.name }}</span>
       <div>
-        <button (click)="editCategory(category.id, category.name)" class="bg-green-500 text-white p-1 rounded mr-2">Изменить</button>
-        <button class="bg-red-500 text-white p-1 rounded">Удалить</button>
+        <app-edit-category [category]="category"></app-edit-category>
+        <!-- app-delete-category добавить -->
+        <button (click)="deleteCategory(category.id)" class="bg-red-500 text-white p-1 rounded">Удалить</button>
+
       </div>
     </li>
   </ul>
