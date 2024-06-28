@@ -5,8 +5,8 @@
     <button class="bg-blue-500 text-white p-2 rounded mt-2 w-full">Добавить</button>
   </div>
   <ul>
-    <li class="border-b p-2 flex justify-between items-center" *ngFor="let category of [1, 2, 3]">
-      <span>Категория {{category}}</span>
+    <li class="border-b p-2 flex justify-between items-center" *ngFor="let category of categories">
+      <span>{{ category.name }}</span>
       <div>
         <button class="bg-green-500 text-white p-1 rounded mr-2">Изменить</button>
         <button class="bg-red-500 text-white p-1 rounded">Удалить</button>
