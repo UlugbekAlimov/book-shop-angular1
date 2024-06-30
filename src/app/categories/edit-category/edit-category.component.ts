@@ -11,12 +11,12 @@ import { Input } from '@angular/core';
   styleUrl: './edit-category.component.scss'
 })
 export class EditCategoryComponent {
-  @Input() category: any; // Добавляем свойство category с типом any
+  @Input() category: any; 
 
   constructor(private categoryService: CategoryService) {}
 
   editCategory(): void {
-    const newName = prompt('Введите новое название категории:', this.category.name);
+    const newName = prompt('Введите название категория:', this.category.name);
     if (newName && newName.trim().length > 0) {
       this.categoryService.updateCategory(this.category.id, newName);
     }

@@ -1,0 +1,24 @@
+<form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
+  <div class="mb-4">
+    <label for="name">Название:</label>
+    <input type="text" id="name" formControlName="name" class="border p-2 rounded w-full" />
+  </div>
+  <div class="mb-4">
+    <label for="description">Описание:</label>
+    <input type="text" id="description" formControlName="description" class="border p-2 rounded w-full" />
+  </div>
+  <div class="mb-4">
+    <label for="price">Цена:</label>
+    <input type="number" id="price" formControlName="price" class="border p-2 rounded w-full" />
+  </div>
+  <div class="mb-4">
+    <label for="categoryId">Категория:</label>
+    <select id="categoryId" formControlName="categoryId" class="border p-2 rounded w-full">
+      <option value="1">Категория 1</option>
+      <option value="2">Категория 2</option>
+    </select>
+  </div>
+  <div class="flex justify-end">
+    <app-custom-button type="success">Созранить</app-custom-button>
+  </div>
+</form>

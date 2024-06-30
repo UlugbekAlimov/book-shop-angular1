@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collectionData, collection } from '@angular/fire/firestore';
+import { Firestore, collectionData, collection, addDoc, doc, updateDoc , deleteDoc} from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Book } from '../models/book.model';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -14,5 +15,25 @@ export class BookService {
 
   getAllBooks(): Observable<Book[]> {
     return collectionData(this.booksCollection, { idField: 'id' }) as Observable<Book[]>;
+  }
+
+  addBook(book: Book): Promise<any> {
+    return addDoc(this.booksCollection, book);
+  }
+
+  updateBook(book: Book): Promise<any> {
+    const bookRef = doc(this.firestore, `books/${book.id}`);
+    const updateData: { [key: string]: any } = {
+      name: book.name,
+      description: book.description,
+      price: book.price,
+      categoryId: book.categoryId
+    };
+    return updateDoc(bookRef, updateData);
+  }
+
+  deleteBook(bookId: string): Promise<any> {
+    const bookRef = doc(this.firestore, `books/${bookId}`);
+    return deleteDoc(bookRef);
   }
 }
