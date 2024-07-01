@@ -5,10 +5,9 @@
   </div>
   <label class="block mb-2">Фильтр книг по категориям:</label>
   <div class="mb-4 flex gap-4">
-    <select class="border p-2 rounded w-full">
-      <option selected>Все категории</option>
-      <option value="1">Категория 1</option>
-      <option value="2">Категория 2</option>
+    <select class="border p-2 rounded w-full" (change)="CategoryChange($event)">
+      <option value="">Все категории</option>
+      <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
     </select>
     <app-custom-button type="info">Фильтр</app-custom-button>
   </div>
@@ -19,16 +18,15 @@
         <p>Название: {{ book.name }}</p>
         <p>Описание: {{ book.description }}</p>
         <p>Цена: {{ book.price | currency }}</p>
-        <p>Категория: </p>
-      </div>
+        <p>Категория: {{ getCategoryName(book.categoryId) }}</p>       </div>
       <div class="flex gap-2">
         <app-custom-button (click)="openModal(book)" type="success">Изменить</app-custom-button>
-        <app-delete-book [book]="book" (bookDeleted)="onBookChange()"></app-delete-book>
+        <app-delete-book [book]="book" (bookDeleted)="BookChange()"></app-delete-book>
       </div>
     </li>
   </ul>
   <app-custom-modal *ngIf="showModal" (closeModal)="closeModal()">
-    <app-add-book *ngIf="!selectedBook" (bookAdded)="onBookChange()"></app-add-book>
-    <app-edit-book *ngIf="selectedBook" [book]="selectedBook" (bookEdited)="onBookChange()"></app-edit-book>
+    <app-add-book *ngIf="!selectedBook" (bookAdded)="BookChange()"></app-add-book>
+    <app-edit-book *ngIf="selectedBook" [book]="selectedBook" (bookEdited)="BookChange()"></app-edit-book>
   </app-custom-modal>
 </div>

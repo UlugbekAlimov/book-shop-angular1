@@ -17,7 +17,7 @@ export class DeleteBookComponent {
 
   constructor(private bookService: BookService) {}
 
-  onDelete(): void {
+  Delete(): void {
     if (this.book && this.book.id) {
       this.bookService.deleteBook(this.book.id).then(() => {
         this.bookDeleted.emit();

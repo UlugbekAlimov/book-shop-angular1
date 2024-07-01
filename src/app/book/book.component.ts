@@ -7,6 +7,8 @@ import { BookService } from '../services/book.service';
 import { Book } from '../models/book.model';
 import { CustomModalComponent } from '../custom-modal/custom-modal.component';
 import { CustomButtonComponent } from '../custom-button/custom-button.component';
+import { CategoryService } from '../services/category.service';
+// import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-books',
@@ -17,38 +19,76 @@ import { CustomButtonComponent } from '../custom-button/custom-button.component'
     EditBookComponent,
     DeleteBookComponent,
     CustomModalComponent,
-    CustomButtonComponent
+    CustomButtonComponent,
   ],
   templateUrl: './book.component.html',
-  styleUrls: ['./book.component.scss']
+  styleUrls: ['./book.component.scss'],
 })
 export class BookComponent implements OnInit {
   books: Book[] = [];
-  showModal = false;
-  selectedBook?: Book;
+  categories: any[] = [];
+  selectedCategory: string = 'all';
+  selectedCategoryId: string | null = null;
+  showModal: boolean = false;
+  selectedBook: Book | null = null;
 
-  constructor(private bookService: BookService) {}
+  constructor(
+    private bookService: BookService,
+    private categoryService: CategoryService
+  ) {}
 
   ngOnInit(): void {
-    this.getBooks();
+    this.loadBooks();
+    this.loadCategories();
   }
 
-  getBooks(): void {
-    this.bookService.getAllBooks().subscribe((books) => (this.books = books));
+  loadBooks(): void {
+    this.bookService.getAllBooks().subscribe((books) => {
+      this.books = books;
+    });
+  }
+
+  loadCategories(): void {
+    this.categoryService.getCategories().subscribe((categories) => {
+      this.categories = categories;
+    });
+  }
+
+  CategoryChange(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    this.selectedCategoryId = target.value || null;
+    this.Filter();
+  }
+
+  Filter(): void {
+    if (this.selectedCategoryId) {
+      this.bookService
+        .getBooksByCategory(this.selectedCategoryId)
+        .subscribe((books) => {
+          this.books = books;
+        });
+    } else {
+      this.loadBooks();
+    }
+  }
+
+  getCategoryName(categoryId: string): string {
+    const category = this.categories.find((cat) => cat.id === categoryId);
+    return category ? category.name : 'error e';
   }
 
   openModal(book?: Book): void {
+    this.selectedBook = book ? { ...book } : null;
     this.showModal = true;
-    this.selectedBook = book;
   }
 
   closeModal(): void {
     this.showModal = false;
-    this.selectedBook = undefined;
+    this.selectedBook = null;
   }
 
-  onBookChange(): void {
-    this.getBooks();
+  BookChange(): void {
+    this.loadBooks();
     this.closeModal();
   }
 }

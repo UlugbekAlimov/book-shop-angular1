@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Firestore, collectionData, collection, addDoc, doc, updateDoc , deleteDoc} from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Book } from '../models/book.model';
+import { query , where } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,11 @@ export class BookService {
 
   constructor(private firestore: Firestore) {
     this.booksCollection = collection(this.firestore, 'books');
+  }
+
+  getBooksByCategory(categoryId: string): Observable<Book[]> {
+    const que = query(this.booksCollection, where('categoryId', '==', categoryId));
+    return collectionData(que, { idField: 'id' }) as Observable<Book[]>;
   }
 
   getAllBooks(): Observable<Book[]> {

@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angula
 import { CustomButtonComponent } from '../../custom-button/custom-button.component';
 import { BookService } from '../../services/book.service';
 import { Book } from '../../models/book.model';
+import { CategoryService } from '../../services/category.service';
 
 @Component({
   selector: 'app-edit-book',
@@ -16,8 +17,10 @@ export class EditBookComponent implements OnChanges {
   bookForm: FormGroup;
   @Input() book!: Book;
   @Output() bookEdited = new EventEmitter<void>();
+  categories: any[] = []; 
 
-  constructor(private fb: FormBuilder, private bookService: BookService) {
+  constructor(private fb: FormBuilder, private bookService: BookService , private categoryService: CategoryService 
+  ) {
     this.bookForm = this.fb.group({
       name: ['', Validators.required],
       description: [''],
@@ -26,13 +29,23 @@ export class EditBookComponent implements OnChanges {
     });
   }
 
+  ngOnInit(): void {
+    this.loadCategories(); 
+  }
+
   ngOnChanges(): void {
     if (this.book) {
       this.bookForm.patchValue(this.book);
     }
   }
 
-  onSubmit(): void {
+  loadCategories(): void {
+    this.categoryService.getCategories().subscribe(categories => {
+      this.categories = categories;
+    });
+  }
+
+  Submit(): void {
     if (this.bookForm.valid) {
       const updatedBook: Book = { ...this.book, ...this.bookForm.value };
       this.bookService.updateBook(updatedBook).then(() => {

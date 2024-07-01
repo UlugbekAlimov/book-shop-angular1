@@ -1,4 +1,4 @@
-<form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="bookForm" (ngSubmit)="Submit()">
   <div class="mb-4">
     <label for="name">Название:</label>
     <input type="text" id="name" formControlName="name" class="border p-2 rounded w-full" />
@@ -14,8 +14,8 @@
   <div class="mb-4">
     <label for="categoryId">Категория:</label>
     <select id="categoryId" formControlName="categoryId" class="border p-2 rounded w-full">
-      <option value="1">Категория 1</option>
-      <option value="2">Категория 2</option>
+      <option selected disabled value="1">Выберите категорию</option>
+      <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
     </select>
   </div>
   <div class="flex justify-end">
