@@ -1,23 +1,92 @@
 <form [formGroup]="bookForm" (ngSubmit)="Submit()">
   <div class="mb-4">
     <label for="name">Название:</label>
-    <input type="text" id="name" formControlName="name" class="border p-2 rounded w-full" [ngClass]="{ 'invalid': bookForm.get('name')?.invalid && bookForm.get('name')?.touched }" />
+    <input
+      type="text"
+      id="name"
+      formControlName="name"
+      class="border p-2 rounded w-full"
+      [ngClass]="{
+        'border-red-500':
+          bookForm.get('name')?.invalid &&
+          (bookForm.get('name')?.dirty || bookForm.get('name')?.touched)
+      }"
+    />
+    <div
+      *ngIf="
+        bookForm.get('name')?.invalid &&
+        (bookForm.get('name')?.dirty || bookForm.get('name')?.touched)
+      "
+      class="text-red-600 mt-1"
+    >
+      Название книги обязательно
+    </div>
   </div>
+
   <div class="mb-4">
     <label for="description">Описание:</label>
-    <input type="text" id="description" formControlName="description" class="border p-2 rounded w-full" />
+    <input
+      type="text"
+      id="description"
+      formControlName="description"
+      class="border p-2 rounded w-full"
+    />
   </div>
+
   <div class="mb-4">
     <label for="price">Цена:</label>
-    <input type="number" id="price" formControlName="price" class="border p-2 rounded w-full" [ngClass]="{ 'invalid': bookForm.get('price')?.invalid && bookForm.get('price')?.touched }" />
+    <input
+      type="number"
+      id="price"
+      formControlName="price"
+      class="border p-2 rounded w-full"
+      [ngClass]="{
+        'border-red-500':
+          bookForm.get('price')?.invalid &&
+          (bookForm.get('price')?.dirty || bookForm.get('price')?.touched)
+      }"
+    />
+    <div
+      *ngIf="
+        bookForm.get('price')?.invalid &&
+        (bookForm.get('price')?.dirty || bookForm.get('price')?.touched)
+      "
+      class="text-red-600 mt-1"
+    >
+      Цена книги обязательна
+    </div>
   </div>
+  
   <div class="mb-4">
     <label for="categoryId">Категория:</label>
-    <select id="categoryId" formControlName="categoryId" class="border p-2 rounded w-full" [ngClass]="{ 'invalid': bookForm.get('categoryId')?.invalid && bookForm.get('categoryId')?.touched }">
+    <select
+      id="categoryId"
+      formControlName="categoryId"
+      class="border p-2 rounded w-full"
+      [ngClass]="{
+        'border-red-500':
+          bookForm.get('categoryId')?.invalid &&
+          (bookForm.get('categoryId')?.dirty ||
+            bookForm.get('categoryId')?.touched)
+      }"
+    >
       <option selected disabled value="1">Выберите категорию</option>
-      <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+      <option *ngFor="let category of categories" [value]="category.id">
+        {{ category.name }}
+      </option>
     </select>
+    <div
+      *ngIf="
+        bookForm.get('categoryId')?.invalid &&
+        (bookForm.get('categoryId')?.dirty ||
+          bookForm.get('categoryId')?.touched)
+      "
+      class="text-red-600 mt-1"
+    >
+      Выберите категорию
+    </div>
   </div>
+  
   <div class="flex justify-end">
     <app-custom-button type="success">Добавить книгу</app-custom-button>
   </div>
