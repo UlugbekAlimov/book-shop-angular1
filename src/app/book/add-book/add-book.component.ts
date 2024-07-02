@@ -40,19 +40,17 @@ export class AddBookComponent implements OnInit {
   }
 
   Submit(): void {
-    this.bookForm.markAllAsTouched(); // Mark all fields as touched to trigger validation
-
+    this.bookForm.markAllAsTouched();
     if (this.bookForm.valid) {
       const newBook = this.bookForm.value;
       this.bookService.addBook(newBook).then(() => {
-        this.bookAdded.emit(); // Emit event to notify parent component
+        this.bookAdded.emit(); 
         this.bookForm.reset({
           name: '',
           description: '',
           price: 0,
           categoryId: ''
         });
-        // Optionally, you can reload books or perform any other necessary actions
       });
     }
   }
