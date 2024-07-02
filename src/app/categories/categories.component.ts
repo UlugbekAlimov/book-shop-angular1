@@ -5,7 +5,6 @@ import { FormsModule, NgModel } from '@angular/forms';
 import { CustomButtonComponent } from '../custom-button/custom-button.component';
 import { AddCategoryComponent } from './add-category/add-category.component';
 import { EditCategoryComponent } from './edit-category/edit-category.component';
-// import { DeleteCategoryComponent } from './delete-category/delete-category.component';
 
 @Component({
   selector: 'app-categories',
@@ -16,7 +15,6 @@ import { EditCategoryComponent } from './edit-category/edit-category.component';
     CustomButtonComponent,
     AddCategoryComponent,
     EditCategoryComponent,
-    // DeleteCategoryComponent,
   ],
   providers: [NgModel],
   templateUrl: './categories.component.html',
@@ -33,8 +31,8 @@ export class CategoriesComponent implements OnInit {
   }
 
   loadCategories(): void {
-    this.categoryService.getCategories().subscribe((data) => {
-      this.categories = data;
+    this.categoryService.getCategories().subscribe((categories) => {
+      this.categories = categories;
     });
   }
 
@@ -44,5 +42,9 @@ export class CategoriesComponent implements OnInit {
         this.loadCategories();
       });
     }
+  }
+
+  CategoryChange(): void {
+    this.loadCategories();
   }
 }

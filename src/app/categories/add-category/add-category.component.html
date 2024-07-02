@@ -1,4 +1,15 @@
 <div class="mb-4">
-  <input [(ngModel)]="newCategoryName" type="text" placeholder="Введите название новой категории" class="border p-2 rounded w-full">
-  <button (click)="addCategory()" class="bg-blue-500 text-white p-2 rounded mt-2">Добавить</button>
+  <input
+    [(ngModel)]="newCategoryName"
+    type="text"
+    placeholder="Введите название новой категории"
+    class="border p-2 rounded w-full"
+    (keyup.enter)="addCategory()"
+  />
+  <button
+    (click)="addCategory()"
+    class="bg-blue-500 text-white p-2 rounded mt-2"
+  >
+    Добавить
+  </button>
 </div>

@@ -1,7 +1,7 @@
 <form [formGroup]="bookForm" (ngSubmit)="Submit()">
   <div class="mb-4">
     <label for="name">Название:</label>
-    <input type="text" id="name" formControlName="name" class="border p-2 rounded w-full" />
+    <input type="text" id="name" formControlName="name" class="border p-2 rounded w-full" [ngClass]="{ 'invalid': bookForm.get('name')?.invalid && bookForm.get('name')?.touched }" />
   </div>
   <div class="mb-4">
     <label for="description">Описание:</label>
@@ -9,11 +9,11 @@
   </div>
   <div class="mb-4">
     <label for="price">Цена:</label>
-    <input type="number" id="price" formControlName="price" class="border p-2 rounded w-full" />
+    <input type="number" id="price" formControlName="price" class="border p-2 rounded w-full" [ngClass]="{ 'invalid': bookForm.get('price')?.invalid && bookForm.get('price')?.touched }" />
   </div>
   <div class="mb-4">
     <label for="categoryId">Категория:</label>
-    <select id="categoryId" formControlName="categoryId" class="border p-2 rounded w-full">
+    <select id="categoryId" formControlName="categoryId" class="border p-2 rounded w-full" [ngClass]="{ 'invalid': bookForm.get('categoryId')?.invalid && bookForm.get('categoryId')?.touched }">
       <option selected disabled value="1">Выберите категорию</option>
       <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
     </select>

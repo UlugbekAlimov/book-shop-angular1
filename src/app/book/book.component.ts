@@ -8,7 +8,6 @@ import { Book } from '../models/book.model';
 import { CustomModalComponent } from '../custom-modal/custom-modal.component';
 import { CustomButtonComponent } from '../custom-button/custom-button.component';
 import { CategoryService } from '../services/category.service';
-// import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-books',
@@ -31,6 +30,8 @@ export class BookComponent implements OnInit {
   selectedCategoryId: string | null = null;
   showModal: boolean = false;
   selectedBook: Book | null = null;
+  loading = false; 
+  modalTitle: string = '';
 
   constructor(
     private bookService: BookService,
@@ -43,9 +44,17 @@ export class BookComponent implements OnInit {
   }
 
   loadBooks(): void {
-    this.bookService.getAllBooks().subscribe((books) => {
-      this.books = books;
-    });
+    this.loading = true; 
+    this.bookService.getAllBooks().subscribe(
+      (books: Book[]) => {
+        this.books = books;
+        this.loading = false; 
+      },
+      error => {
+        console.error('Ошибка:', error);
+        this.loading = false; 
+      }
+    );
   }
 
   loadCategories(): void {
@@ -78,7 +87,13 @@ export class BookComponent implements OnInit {
   }
 
   openModal(book?: Book): void {
-    this.selectedBook = book ? { ...book } : null;
+    if (book) {
+      this.selectedBook = book;
+      this.modalTitle = 'Изменить книгу';
+    } else {
+      this.selectedBook = null;
+      this.modalTitle = 'Добавить книгу';
+    }
     this.showModal = true;
   }
 

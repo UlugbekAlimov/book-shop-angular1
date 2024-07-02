@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CustomButtonComponent } from '../../custom-button/custom-button.component';
 import { BookService } from '../../services/book.service';
-import { Book } from '../../models/book.model';
+// import { Book } from '../../models/book.model';
 import { CategoryService } from '../../services/category.service';
 
 
@@ -40,7 +40,7 @@ export class AddBookComponent implements OnInit {
 
   Submit(): void {
     if (this.bookForm.valid) {
-      const newBook: Book = this.bookForm.value;
+      const newBook = this.bookForm.value;
       this.bookService.addBook(newBook).then(() => {
         this.bookAdded.emit();
         this.bookForm.reset();

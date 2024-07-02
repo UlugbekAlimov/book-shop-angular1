@@ -11,21 +11,26 @@
     </select>
     <app-custom-button type="info">Фильтр</app-custom-button>
   </div>
-  <ul class="grid grid-cols-3 gap-4">
-    <li class="border p-4 flex flex-col items-center" *ngFor="let book of books">
+  <div *ngIf="loading" class="text-[18px] font-medium text-center">
+    <p>Загрузка...</p>
+  </div>
+  <ul class="grid grid-cols-3 gap-4" *ngIf="!loading && books.length > 0">
+    <li class="border shadow-lg rounded-[7px] p-4 flex flex-col items-center" *ngFor="let book of books">
       <img src="../../assets/image/9780802163011.webp" alt="Book Image" class="w-[120px] h-36 mb-4" />
       <div class="mb-2">
         <p>Название: {{ book.name }}</p>
         <p>Описание: {{ book.description }}</p>
         <p>Цена: {{ book.price | currency }}</p>
-        <p>Категория: {{ getCategoryName(book.categoryId) }}</p>       </div>
+        <p>Категория: {{ getCategoryName(book.categoryId) }}</p>       
+        <p *ngIf="!loading && books.length === 0">Нет доступных книг.</p>
+      </div>
       <div class="flex gap-2">
         <app-custom-button (click)="openModal(book)" type="success">Изменить</app-custom-button>
         <app-delete-book [book]="book" (bookDeleted)="BookChange()"></app-delete-book>
       </div>
     </li>
   </ul>
-  <app-custom-modal *ngIf="showModal" (closeModal)="closeModal()">
+  <app-custom-modal [title]="modalTitle" *ngIf="showModal" (closeModal)="closeModal()">
     <app-add-book *ngIf="!selectedBook" (bookAdded)="BookChange()"></app-add-book>
     <app-edit-book *ngIf="selectedBook" [book]="selectedBook" (bookEdited)="BookChange()"></app-edit-book>
   </app-custom-modal>

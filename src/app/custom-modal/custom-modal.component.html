@@ -1,14 +1,14 @@
 <div class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center">
   <div class="bg-white rounded-lg p-6 w-96">
     <div class="flex justify-between items-center border-b pb-3 mb-4">
-      <h2 class="text-lg font-semibold">book</h2>
-      <button class="text-gray-600 hover:text-gray-800 focus:outline-none" (click)="onClose()">Close</button>
+      <h2 class="text-lg font-semibold">{{ title }}</h2>
+      <button class="text-gray-600 hover:text-gray-800 focus:outline-none" (click)="onClose()"><img src="../../assets/close.png" alt=""></button>
     </div>
     <div>
       <ng-content></ng-content>
     </div>
     <div class="mt-4 flex justify-end">
-      <button class="px-4 py-2 bg-gray-300 text-gray-600 rounded-md ml-2 hover:bg-gray-400 focus:outline-none" (click)="onClose()">Cancel</button>
+      <!-- <button class="px-4 py-2 bg-gray-300 text-gray-600 rounded-md ml-2 hover:bg-gray-400 focus:outline-none" (click)="onClose()">Отмена</button> -->
     </div>
   </div>
 </div>

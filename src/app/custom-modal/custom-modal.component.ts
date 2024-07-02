@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-
+import { Input } from '@angular/core';
 @Component({
   standalone: true,
   selector: 'app-custom-modal',
@@ -7,6 +7,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./custom-modal.component.scss'],
 })
 export class CustomModalComponent {
+  @Input() title: string = ''; 
   @Output() closeModal: EventEmitter<void> = new EventEmitter();
 
   public showModal: boolean = false;

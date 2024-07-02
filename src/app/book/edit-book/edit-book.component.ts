@@ -17,10 +17,9 @@ export class EditBookComponent implements OnChanges {
   bookForm: FormGroup;
   @Input() book!: Book;
   @Output() bookEdited = new EventEmitter<void>();
-  categories: any[] = []; 
+  categories: any[] = [];
 
-  constructor(private fb: FormBuilder, private bookService: BookService , private categoryService: CategoryService 
-  ) {
+  constructor(private fb: FormBuilder, private bookService: BookService, private categoryService: CategoryService) {
     this.bookForm = this.fb.group({
       name: ['', Validators.required],
       description: [''],
@@ -29,14 +28,11 @@ export class EditBookComponent implements OnChanges {
     });
   }
 
-  ngOnInit(): void {
-    this.loadCategories(); 
-  }
-
   ngOnChanges(): void {
     if (this.book) {
       this.bookForm.patchValue(this.book);
     }
+    this.loadCategories();
   }
 
   loadCategories(): void {
