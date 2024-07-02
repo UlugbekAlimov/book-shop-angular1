@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CustomButtonComponent } from '../../custom-button/custom-button.component';
 import { BookService } from '../../services/book.service';
-// import { Book } from '../../models/book.model';
+import { Book } from '../../models/book.model';
 import { CategoryService } from '../../services/category.service';
 
 
@@ -17,6 +17,7 @@ import { CategoryService } from '../../services/category.service';
 export class AddBookComponent implements OnInit {
   bookForm: FormGroup;
   categories: any[] = [];
+  
   @Output() bookAdded = new EventEmitter<void>();
 
   constructor(private fb: FormBuilder, private bookService: BookService, private categoryService: CategoryService) {
@@ -39,11 +40,19 @@ export class AddBookComponent implements OnInit {
   }
 
   Submit(): void {
+    this.bookForm.markAllAsTouched(); // Mark all fields as touched to trigger validation
+
     if (this.bookForm.valid) {
       const newBook = this.bookForm.value;
       this.bookService.addBook(newBook).then(() => {
-        this.bookAdded.emit();
-        this.bookForm.reset();
+        this.bookAdded.emit(); // Emit event to notify parent component
+        this.bookForm.reset({
+          name: '',
+          description: '',
+          price: 0,
+          categoryId: ''
+        });
+        // Optionally, you can reload books or perform any other necessary actions
       });
     }
   }

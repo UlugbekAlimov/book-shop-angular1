@@ -7,7 +7,7 @@
       formControlName="name"
       class="border p-2 rounded w-full"
       [ngClass]="{
-        'border-red-500':
+        invalid:
           bookForm.get('name')?.invalid &&
           (bookForm.get('name')?.dirty || bookForm.get('name')?.touched)
       }"
@@ -41,7 +41,7 @@
       formControlName="price"
       class="border p-2 rounded w-full"
       [ngClass]="{
-        'border-red-500':
+        invalid:
           bookForm.get('price')?.invalid &&
           (bookForm.get('price')?.dirty || bookForm.get('price')?.touched)
       }"
@@ -56,7 +56,7 @@
       Цена книги обязательна
     </div>
   </div>
-  
+
   <div class="mb-4">
     <label for="categoryId">Категория:</label>
     <select
@@ -64,7 +64,7 @@
       formControlName="categoryId"
       class="border p-2 rounded w-full"
       [ngClass]="{
-        'border-red-500':
+        invalid:
           bookForm.get('categoryId')?.invalid &&
           (bookForm.get('categoryId')?.dirty ||
             bookForm.get('categoryId')?.touched)
