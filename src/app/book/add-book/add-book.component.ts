@@ -1,10 +1,11 @@
-import { Component, Output, EventEmitter , OnInit } from '@angular/core';
+import { Component, Output, EventEmitter , OnInit , OnChanges , SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CustomButtonComponent } from '../../custom-button/custom-button.component';
 import { BookService } from '../../services/book.service';
 import { Book } from '../../models/book.model';
 import { CategoryService } from '../../services/category.service';
+import { Input } from '@angular/core';
 
 
 @Component({
@@ -14,13 +15,17 @@ import { CategoryService } from '../../services/category.service';
   templateUrl: './add-book.component.html',
   styleUrls: ['./add-book.component.scss']
 })
-export class AddBookComponent implements OnInit {
+export class AddBookComponent implements OnInit, OnChanges {
   bookForm: FormGroup;
   categories: any[] = [];
-  
+  @Input() selectedCategory: string | null = null;
   @Output() bookAdded = new EventEmitter<void>();
 
-  constructor(private fb: FormBuilder, private bookService: BookService, private categoryService: CategoryService) {
+  constructor(
+    private fb: FormBuilder,
+    private bookService: BookService,
+    private categoryService: CategoryService
+  ) {
     this.bookForm = this.fb.group({
       name: ['', Validators.required],
       description: [''],
@@ -33,8 +38,14 @@ export class AddBookComponent implements OnInit {
     this.loadCategories();
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['selectedCategory'] && this.selectedCategory) {
+      this.bookForm.patchValue({ categoryId: this.selectedCategory });
+    }
+  }
+
   loadCategories(): void {
-    this.categoryService.getCategories().subscribe(categories => {
+    this.categoryService.getCategories().subscribe((categories) => {
       this.categories = categories;
     });
   }
@@ -44,7 +55,7 @@ export class AddBookComponent implements OnInit {
     if (this.bookForm.valid) {
       const newBook = this.bookForm.value;
       this.bookService.addBook(newBook).then(() => {
-        this.bookAdded.emit(); 
+        this.bookAdded.emit();
         this.bookForm.reset({
           name: '',
           description: '',

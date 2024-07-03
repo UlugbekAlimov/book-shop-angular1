@@ -31,7 +31,7 @@
     </li>
   </ul>
   <app-custom-modal [title]="modalTitle" *ngIf="showModal" (closeModal)="closeModal()">
-    <app-add-book *ngIf="!selectedBook" (bookAdded)="BookChange()"></app-add-book>
+    <app-add-book *ngIf="!selectedBook" (bookAdded)="BookChange()" [selectedCategory]="selectedCategoryId"></app-add-book>
     <app-edit-book *ngIf="selectedBook" [book]="selectedBook" (bookEdited)="BookChange()"></app-edit-book>
-  </app-custom-modal>
+  </app-custom-modal>  
 </div>
