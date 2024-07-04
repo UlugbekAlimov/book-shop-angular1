@@ -1,24 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AddBookComponent } from './add-book/add-book.component';
-import { EditBookComponent } from './edit-book/edit-book.component';
+// import { AddBookComponent } from './add-book/add-book.component';
+// import { EditBookComponent } from './edit-book/edit-book.component';
 import { DeleteBookComponent } from './delete-book/delete-book.component';
 import { BookService } from '../services/book.service';
 import { Book } from '../models/book.model';
 import { CustomModalComponent } from '../custom-modal/custom-modal.component';
 import { CustomButtonComponent } from '../custom-button/custom-button.component';
 import { CategoryService } from '../services/category.service';
-
+import { BookModalComponent } from './book-modal/book-modal.component';
 @Component({
   selector: 'app-books',
   standalone: true,
   imports: [
     CommonModule,
-    AddBookComponent,
-    EditBookComponent,
+    // AddBookComponent,
+    // EditBookComponent,
     DeleteBookComponent,
     CustomModalComponent,
     CustomButtonComponent,
+    BookModalComponent
   ],
   templateUrl: './book.component.html',
   styleUrls: ['./book.component.scss'],

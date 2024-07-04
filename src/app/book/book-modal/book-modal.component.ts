@@ -1,25 +1,25 @@
-import { Component, Output, EventEmitter , OnInit , OnChanges , SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CustomButtonComponent } from '../../custom-button/custom-button.component';
 import { BookService } from '../../services/book.service';
 import { Book } from '../../models/book.model';
 import { CategoryService } from '../../services/category.service';
-import { Input } from '@angular/core';
-
 
 @Component({
-  selector: 'app-add-book',
+  selector: 'app-book-modal',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, CustomButtonComponent  ],
-  templateUrl: './add-book.component.html',
-  styleUrls: ['./add-book.component.scss']
+  imports: [CommonModule, ReactiveFormsModule, CustomButtonComponent],
+  templateUrl: './book-modal.component.html',
+  styleUrls: ['./book-modal.component.scss']
 })
-export class AddBookComponent implements OnInit, OnChanges {
+export class BookModalComponent implements OnChanges, OnInit {
   bookForm: FormGroup;
   categories: any[] = [];
+  @Input() book: Book | null = null;
   @Input() selectedCategory: string | null = null;
-  @Output() bookAdded = new EventEmitter<void>();
+  @Output() bookSaved = new EventEmitter<void>();
+  EditMode = false;
 
   constructor(
     private fb: FormBuilder,
@@ -39,7 +39,10 @@ export class AddBookComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['selectedCategory'] && this.selectedCategory) {
+    if (changes['book'] && this.book) {
+      this.EditMode = true;
+      this.bookForm.patchValue(this.book);
+    } else if (changes['selectedCategory'] && this.selectedCategory) {
       this.bookForm.patchValue({ categoryId: this.selectedCategory });
     }
   }
@@ -53,16 +56,23 @@ export class AddBookComponent implements OnInit, OnChanges {
   Submit(): void {
     this.bookForm.markAllAsTouched();
     if (this.bookForm.valid) {
-      const newBook = this.bookForm.value;
-      this.bookService.addBook(newBook).then(() => {
-        this.bookAdded.emit();
-        this.bookForm.reset({
-          name: '',
-          description: '',
-          price: 0,
-          categoryId: ''
+      if (this.EditMode) {
+        const updatedBook: Book = { ...this.book, ...this.bookForm.value };
+        this.bookService.updateBook(updatedBook).then(() => {
+          this.bookSaved.emit();
         });
-      });
+      } else {
+        const newBook = this.bookForm.value;
+        this.bookService.addBook(newBook).then(() => {
+          this.bookSaved.emit();
+          this.bookForm.reset({
+            name: '',
+            description: '',
+            price: 0,
+            categoryId: ''
+          });
+        });
+      }
     }
   }
 }

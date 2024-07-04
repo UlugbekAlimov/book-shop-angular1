@@ -21,7 +21,7 @@
         <p>Название: {{ book.name }}</p>
         <p>Описание: {{ book.description }}</p>
         <p>Цена: {{ book.price | currency }}</p>
-        <p>Категория: {{ getCategoryName(book.categoryId) }}</p>       
+        <p>Категория: {{ getCategoryName(book.categoryId) }}</p>
         <p *ngIf="!loading && books.length === 0">Нет доступных книг.</p>
       </div>
       <div class="flex gap-2">
@@ -31,7 +31,10 @@
     </li>
   </ul>
   <app-custom-modal [title]="modalTitle" *ngIf="showModal" (closeModal)="closeModal()">
-    <app-add-book *ngIf="!selectedBook" (bookAdded)="BookChange()" [selectedCategory]="selectedCategoryId"></app-add-book>
-    <app-edit-book *ngIf="selectedBook" [book]="selectedBook" (bookEdited)="BookChange()"></app-edit-book>
-  </app-custom-modal>  
+    <app-book-modal
+      [book]="selectedBook"
+      (bookSaved)="BookChange()"
+      [selectedCategory]="!selectedBook ? selectedCategoryId : null"
+    ></app-book-modal>
+  </app-custom-modal>
 </div>
